@@ -1,17 +1,19 @@
 {
-  "name": "tabmate",
+  "name": "@tabmate/core",
   "author": {
     "name": "Pascal Bothner",
     "email": "pascal.bothner@proton.me"
   },
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "test": "vitest",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:ui": "vitest --ui",
     "lint": "eslint ."
   },
   "devDependencies": {
