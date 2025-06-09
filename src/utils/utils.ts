@@ -34,3 +34,31 @@ export function dedent(text: string, options?: TabmateOptions): string {
 
   return text.slice(actualSpacesToRemove);
 }
+
+/**
+ * Indents each line of a multiline text by a specified number of tabs.
+ * @param text - The multiline text to indent
+ * @param options - Optional configuration
+ * @param options.tabs - Number of tabs to indent (default: 1)
+ * @param options.tabWidth - Number of spaces per tab (default: 2)
+ * @returns The indented multiline text
+ */
+export function indentLines(text: string, options?: TabmateOptions): string {
+  const lines = text.split('\n');
+  const indentedLines = lines.map(line => indent(line, options));
+  return indentedLines.join('\n');
+}
+
+/**
+ * Removes indentation from each line of a multiline text by a specified number of tabs.
+ * @param text - The multiline text to dedent
+ * @param options - Optional configuration
+ * @param options.tabs - Number of tabs to dedent (default: 1)
+ * @param options.tabWidth - Number of spaces per tab (default: 2)
+ * @returns The dedented multiline text
+ */
+export function dedentLines(text: string, options?: TabmateOptions): string {
+  const lines = text.split('\n');
+  const dedentedLines = lines.map(line => dedent(line, options));
+  return dedentedLines.join('\n');
+}

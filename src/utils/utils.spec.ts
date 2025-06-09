@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { dedent, indent } from "./utils.ts";
+import { dedent, dedentLines, indent, indentLines } from "./utils.ts";
 
 describe("utils", () => {
   describe("indent", () => {
@@ -63,6 +63,29 @@ describe("utils", () => {
       const result = dedent(indented, { tabWidth: 20 });
 
       expect(result).toEqual(`${given}`);
+    });
+  });
+
+  describe("multiline", () => {
+    it("should indent multiple lines of text", () => {
+      const given = "user:\n  name: John Doe\n  email: john.doe@example.com";
+
+      const result = indentLines(given);
+
+      expect(result).toEqual(
+        "  user:\n    name: John Doe\n    email: john.doe@example.com",
+      );
+    });
+
+    it("should dedent multiple lines of text", () => {
+      const given =
+        "  user:\n    name: John Doe\n    email: john.doe@example.com";
+
+      const result = dedentLines(given);
+
+      expect(result).toEqual(
+        "user:\n  name: John Doe\n  email: john.doe@example.com",
+      );
     });
   });
 });
