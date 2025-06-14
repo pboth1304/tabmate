@@ -23,12 +23,7 @@ const typeAndIndent = async (
   user: UserEvent,
 ) => {
   await user.type(textareaEl, textContent);
-
-  await user.pointer({
-    target: textareaEl,
-    offset: 0, // Click at the beginning of the input
-  });
-
+  textareaEl.setSelectionRange(0, 0);
   await user.tab();
 };
 
@@ -62,6 +57,47 @@ describe("tabmate", () => {
     await user.tab({ shift: true });
 
     expect(textareaEl.value).toEqual(given);
+  });
+
+  it("should indent starting from mouse pointer position", async () => {
+    const given = "test";
+
+    const { user, container } = renderTextarea();
+
+    const textareaEl: HTMLTextAreaElement = getByTestId(container, "textarea");
+    tabmate(textareaEl);
+
+    await user.type(textareaEl, given);
+
+    textareaEl.focus();
+    textareaEl.setSelectionRange(2, 2); // moves cursor between 'e' and 'x' in 'text'
+
+    await user.tab();
+
+    expect(textareaEl.value).toEqual("te  st");
+  });
+
+  it("should indent multiple lines for current selection", async () => {
+    const given = `test
+    indentation
+      with multiple lines`;
+
+    const { user, container } = renderTextarea();
+
+    const textareaEl: HTMLTextAreaElement = getByTestId(container, "textarea");
+    tabmate(textareaEl);
+
+    await user.type(textareaEl, given);
+
+    textareaEl.focus();
+    // Select from start of second line to end of third line
+    textareaEl.setSelectionRange(5, given.length);
+
+    await user.tab();
+
+    expect(textareaEl.value).toEqual(`test
+      indentation
+        with multiple lines`);
   });
 
   it("should restore default tab behavior after detach", async () => {
