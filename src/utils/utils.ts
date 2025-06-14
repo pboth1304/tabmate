@@ -1,4 +1,4 @@
-import type { TabmateOptions } from "./types";
+import type { TabmateOptions } from "../types";
 
 /**
  * Indents the given text by a specified number of tabs.
@@ -44,9 +44,9 @@ export function dedent(text: string, options?: TabmateOptions): string {
  * @returns The indented multiline text
  */
 export function indentLines(text: string, options?: TabmateOptions): string {
-  const lines = text.split('\n');
-  const indentedLines = lines.map(line => indent(line, options));
-  return indentedLines.join('\n');
+  const lines = text.split("\n");
+  const indentedLines = lines.map((line) => indent(line, options));
+  return indentedLines.join("\n");
 }
 
 /**
@@ -58,7 +58,7 @@ export function indentLines(text: string, options?: TabmateOptions): string {
  * @returns The dedented multiline text
  */
 export function dedentLines(text: string, options?: TabmateOptions): string {
-  const lines = text.split('\n');
-  const dedentedLines = lines.map(line => dedent(line, options));
-  return dedentedLines.join('\n');
+  const lines = text.split("\n");
+  const dedentedLines = lines.map((line) => dedent(line, options));
+  return dedentedLines.join("\n");
 }
