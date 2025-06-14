@@ -29,7 +29,7 @@ const typeAndIndent = async (
     offset: 0, // Click at the beginning of the input
   });
 
-  await user.keyboard("{tab}");
+  await user.tab();
 };
 
 describe("tabmate", () => {
@@ -44,6 +44,24 @@ describe("tabmate", () => {
     await typeAndIndent(textareaEl, given, user);
 
     expect(textareaEl.value).toEqual(`  ${given}`);
+  });
+
+  it("should be able to detend text in textarea", async () => {
+    const given = "test";
+
+    const { container, user } = renderTextarea();
+
+    const textareaEl: HTMLTextAreaElement = getByTestId(container, "textarea");
+
+    // Type and indent text first, so it can be dedented
+    tabmate(textareaEl);
+    await typeAndIndent(textareaEl, given, user);
+    expect(textareaEl.value).toEqual(`  ${given}`);
+
+    // Press shift+tab for detending
+    await user.tab({ shift: true });
+
+    expect(textareaEl.value).toEqual(given);
   });
 
   it("should restore default tab behavior after detach", async () => {
@@ -68,7 +86,7 @@ describe("tabmate", () => {
     instance.detach();
 
     // Press tab - should now move focus to the second textarea instead of indenting
-    await user.keyboard("{tab}");
+    await user.tab();
 
     // Check that the value is still the same as before
     expect(textareaEl.value).toEqual("  test");
