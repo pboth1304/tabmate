@@ -3,7 +3,13 @@ import type {
   TabmateOptions,
   TabmateTarget,
 } from "./types.ts";
-import { dedentLines, indent, indentLines } from "./utils/utils.ts";
+import {
+  dedentLines,
+  getSelectedLineRange,
+  indent,
+  indentLines,
+  replaceTextInRange,
+} from "./utils/utils.ts";
 
 let globalDefaults: Required<TabmateOptions> = {
   tabs: 1,
@@ -23,39 +29,37 @@ export class Tabmate {
 
     const handleKeydown = (event: KeyboardEvent) => {
       const { selectionStart, selectionEnd, value: textareaVal } = el;
+      const tabSpaces = config.tabWidth * config.tabs;
 
       if (event.shiftKey && event.key === "Tab") {
         // Prevent the default browser behavior (moving focus to the next element)
         event.preventDefault();
 
-        // Calculate how many spaces would be removed from the line containing the cursor
-        const currentLineStart =
-          textareaVal.lastIndexOf("\n", selectionStart - 1) + 1;
-        const nextNewline = textareaVal.indexOf("\n", selectionStart);
-        const currentLineEnd =
-          nextNewline === -1 ? textareaVal.length : nextNewline;
-        const currentLine = textareaVal.substring(
-          currentLineStart,
-          currentLineEnd,
+        const { startOfFirstLine, endOfLastLine } = getSelectedLineRange(
+          textareaVal,
+          selectionStart,
+          selectionEnd,
         );
-        const leadingSpaces = currentLine.match(/^(\s*)/)?.[0].length ?? 0;
-        const spacesToRemove = Math.min(
-          leadingSpaces,
-          config.tabWidth * config.tabs,
+        const linesToDedent = textareaVal.slice(
+          startOfFirstLine,
+          endOfLastLine,
         );
+        const dedentedText = dedentLines(linesToDedent, config);
 
         // Dedent the text
-        el.value = dedentLines(textareaVal, options);
-
+        el.value = replaceTextInRange(
+          textareaVal,
+          startOfFirstLine,
+          endOfLastLine,
+          dedentedText,
+        );
+        // TODO: prevent cursor from going until to the start when no space left
         // Adjust cursor position based on removed spaces
         el.selectionStart = Math.max(
-          currentLineStart,
-          selectionStart - spacesToRemove,
+          startOfFirstLine,
+          selectionStart - tabSpaces,
         );
-        el.selectionEnd = Math.max(
-          currentLineStart,
-          selectionEnd - spacesToRemove,
-        );
+        el.selectionEnd = Math.max(startOfFirstLine, selectionEnd - tabSpaces);
       } else if (event.key === "Tab") {
         // Prevent the default browser behavior (moving focus to the next element)
         event.preventDefault();
@@ -71,14 +75,11 @@ export class Tabmate {
           return;
         }
 
-        // Determine the start of the first selected line
-        const startOfFirstLine =
-          textareaVal.lastIndexOf("\n", selectionStart - 1) + 1;
-
-        // Determine the end of the last selected line
-        const nextNewline = textareaVal.indexOf("\n", selectionEnd);
-        const endOfLastLine =
-          nextNewline === -1 ? textareaVal.length : nextNewline;
+        const { startOfFirstLine, endOfLastLine } = getSelectedLineRange(
+          textareaVal,
+          selectionStart,
+          selectionEnd,
+        );
 
         // Extract full lines to be indented
         const linesToIndent = textareaVal.slice(
@@ -88,10 +89,12 @@ export class Tabmate {
         const indentedText = indentLines(linesToIndent, options);
 
         // Reconstruct the full textarea value with indented lines
-        el.value =
-          textareaVal.slice(0, startOfFirstLine) +
-          indentedText +
-          textareaVal.slice(endOfLastLine);
+        el.value = replaceTextInRange(
+          textareaVal,
+          startOfFirstLine,
+          endOfLastLine,
+          indentedText,
+        );
 
         // TODO: selection increases to the full line
         el.selectionStart = startOfFirstLine;
