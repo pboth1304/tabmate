@@ -53,10 +53,73 @@ describe("tabmate", () => {
     await typeAndIndent(textareaEl, given, user);
     expect(textareaEl.value).toEqual(`  ${given}`);
 
-    // Press shift+tab for detending
+    // Press shift+tab for dedenting
     await user.tab({ shift: true });
 
     expect(textareaEl.value).toEqual(given);
+  });
+
+  it("should keep mouse pointer position where it was after dedenting", async () => {
+    const given = "test";
+
+    const { container, user } = renderTextarea();
+
+    const textareaEl: HTMLTextAreaElement = getByTestId(container, "textarea");
+
+    // Type and indent text first, so it can be dedented
+    tabmate(textareaEl);
+    await typeAndIndent(textareaEl, given, user);
+    expect(textareaEl.value).toEqual(`  ${given}`);
+    textareaEl.setSelectionRange(4, 4); // moves cursor between 'e' and 's' in 'test'
+
+    // Press shift+tab for detending
+    await user.tab({ shift: true });
+
+    // Cursor should still be between 'e' and 's' of 'test'
+    expect(textareaEl.selectionStart).toBe(2);
+    expect(textareaEl.selectionEnd).toBe(2);
+  });
+
+  it("should keep selection where it was after dedenting", async () => {
+    const given = "test";
+
+    const { container, user } = renderTextarea();
+
+    const textareaEl: HTMLTextAreaElement = getByTestId(container, "textarea");
+
+    // Type and indent text first, so it can be dedented
+    tabmate(textareaEl);
+    await typeAndIndent(textareaEl, given, user);
+    expect(textareaEl.value).toEqual(`  ${given}`);
+    textareaEl.setSelectionRange(4, 6); // selects 'st' in 'test'
+
+    // Press shift+tab for detending
+    await user.tab({ shift: true });
+
+    // Cursor should still select 'st'
+    expect(textareaEl.selectionStart).toBe(2);
+    expect(textareaEl.selectionEnd).toBe(4);
+  });
+
+  it("should remove selection if there are no leading spaces left after dedenting", async () => {
+    const given = "test";
+
+    const { container, user } = renderTextarea();
+
+    const textareaEl: HTMLTextAreaElement = getByTestId(container, "textarea");
+
+    // Type and indent text first, so it can be dedented
+    tabmate(textareaEl);
+    await typeAndIndent(textareaEl, given, user);
+    expect(textareaEl.value).toEqual(`  ${given}`);
+    textareaEl.setSelectionRange(0, 2); // selects the space in front of the indented text
+
+    // Press shift+tab for detending
+    await user.tab({ shift: true });
+
+    // Cursor should still select 'st'
+    expect(textareaEl.selectionStart).toBe(0);
+    expect(textareaEl.selectionEnd).toBe(0);
   });
 
   it("should indent starting from mouse pointer position", async () => {
@@ -68,9 +131,7 @@ describe("tabmate", () => {
     tabmate(textareaEl);
 
     await user.type(textareaEl, given);
-
-    textareaEl.focus();
-    textareaEl.setSelectionRange(2, 2); // moves cursor between 'e' and 'x' in 'text'
+    textareaEl.setSelectionRange(2, 2); // moves cursor between 'e' and 's' in 'test'
 
     await user.tab();
 

@@ -3,7 +3,7 @@ import type {
   TabmateOptions,
   TabmateTarget,
 } from "./types.ts";
-import { indentLines, dedentLines, indent } from "./utils/utils.ts";
+import { dedentLines, indent, indentLines } from "./utils/utils.ts";
 
 let globalDefaults: Required<TabmateOptions> = {
   tabs: 1,
@@ -22,19 +22,43 @@ export class Tabmate {
     const config: Required<TabmateOptions> = { ...globalDefaults, ...options };
 
     const handleKeydown = (event: KeyboardEvent) => {
+      const { selectionStart, selectionEnd, value: textareaVal } = el;
+
       if (event.shiftKey && event.key === "Tab") {
         // Prevent the default browser behavior (moving focus to the next element)
         event.preventDefault();
 
-        // TODO: use selected lines only
-        el.value = dedentLines(el.value, options);
+        // Calculate how many spaces would be removed from the line containing the cursor
+        const currentLineStart =
+          textareaVal.lastIndexOf("\n", selectionStart - 1) + 1;
+        const nextNewline = textareaVal.indexOf("\n", selectionStart);
+        const currentLineEnd =
+          nextNewline === -1 ? textareaVal.length : nextNewline;
+        const currentLine = textareaVal.substring(
+          currentLineStart,
+          currentLineEnd,
+        );
+        const leadingSpaces = currentLine.match(/^(\s*)/)?.[0].length ?? 0;
+        const spacesToRemove = Math.min(
+          leadingSpaces,
+          config.tabWidth * config.tabs,
+        );
+
+        // Dedent the text
+        el.value = dedentLines(textareaVal, options);
+
+        // Adjust cursor position based on removed spaces
+        el.selectionStart = Math.max(
+          currentLineStart,
+          selectionStart - spacesToRemove,
+        );
+        el.selectionEnd = Math.max(
+          currentLineStart,
+          selectionEnd - spacesToRemove,
+        );
       } else if (event.key === "Tab") {
         // Prevent the default browser behavior (moving focus to the next element)
         event.preventDefault();
-
-        const selectionStart = el.selectionStart;
-        const selectionEnd = el.selectionEnd;
-        const textareaVal = el.value;
 
         if (selectionStart === selectionEnd) {
           const indented = indent(textareaVal.substring(selectionEnd), config);
