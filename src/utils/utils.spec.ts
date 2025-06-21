@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  countSelectionOffset,
   dedent,
   dedentLines,
   getSelectedLineRange,
@@ -207,6 +208,160 @@ describe("utils", () => {
       const result = replaceTextInRange(original, start, end, replacement);
 
       expect(result).toBe("New text");
+    });
+  });
+
+  describe("countSelectionOffset", () => {
+    it("should calculate new selection for single line text", () => {
+      const startOfFirstLine = 0;
+      const selectionStart = 2;
+      const selectionEnd = 6;
+      const selectedText = "This is a test";
+      const tabSpaces = 2;
+
+      const result = countSelectionOffset(
+        startOfFirstLine,
+        selectionStart,
+        selectionEnd,
+        selectedText,
+        tabSpaces,
+      );
+
+      expect(result.selectionStart).toBe(4); // startOfFirstLine (0) + tabSpaces (2) + relativeStart (2)
+      expect(result.selectionEnd).toBe(8); // startOfFirstLine (0) + tabSpaces (2) + relativeEnd (6)
+    });
+
+    it("should calculate new selection for multi-line text", () => {
+      const startOfFirstLine = 0;
+      const selectionStart = 2;
+      const selectionEnd = 15;
+      const selectedText = "First line\nSecond line";
+      const tabSpaces = 2;
+
+      const result = countSelectionOffset(
+        startOfFirstLine,
+        selectionStart,
+        selectionEnd,
+        selectedText,
+        tabSpaces,
+      );
+
+      expect(result.selectionStart).toBe(4); // startOfFirstLine (0) + tabSpaces (2) + relativeStart (2)
+      expect(result.selectionEnd).toBe(19); // startOfFirstLine (0) + tabSpaces (2) + relativeEnd (15) + lineCountOffset (1 * 2)
+    });
+
+    it("should handle selection at the beginning of text", () => {
+      const startOfFirstLine = 0;
+      const selectionStart = 0;
+      const selectionEnd = 5;
+      const selectedText = "First line";
+      const tabSpaces = 2;
+
+      const result = countSelectionOffset(
+        startOfFirstLine,
+        selectionStart,
+        selectionEnd,
+        selectedText,
+        tabSpaces,
+      );
+
+      expect(result.selectionStart).toBe(2); // startOfFirstLine (0) + tabSpaces (2) + relativeStart (0)
+      expect(result.selectionEnd).toBe(7); // startOfFirstLine (0) + tabSpaces (2) + relativeEnd (5)
+    });
+
+    it("should handle selection at the end of text", () => {
+      const startOfFirstLine = 0;
+      const selectionStart = 6;
+      const selectionEnd = 10;
+      const selectedText = "First line";
+      const tabSpaces = 2;
+
+      const result = countSelectionOffset(
+        startOfFirstLine,
+        selectionStart,
+        selectionEnd,
+        selectedText,
+        tabSpaces,
+      );
+
+      expect(result.selectionStart).toBe(8); // startOfFirstLine (0) + tabSpaces (2) + relativeStart (6)
+      expect(result.selectionEnd).toBe(12); // startOfFirstLine (0) + tabSpaces (2) + relativeEnd (10)
+    });
+
+    it("should handle selection with multiple lines", () => {
+      const startOfFirstLine = 0;
+      const selectionStart = 2;
+      const selectionEnd = 33;
+      const selectedText = "First line\nSecond line\nThird line";
+      const tabSpaces = 2;
+
+      const result = countSelectionOffset(
+        startOfFirstLine,
+        selectionStart,
+        selectionEnd,
+        selectedText,
+        tabSpaces,
+      );
+
+      expect(result.selectionStart).toBe(4); // startOfFirstLine (0) + tabSpaces (2) + relativeStart (2)
+      expect(result.selectionEnd).toBe(39); // startOfFirstLine (0) + tabSpaces (2) + relativeEnd (33) + lineCountOffset (2 * 2)
+    });
+
+    it("should handle non-zero startOfFirstLine", () => {
+      const startOfFirstLine = 5;
+      const selectionStart = 7;
+      const selectionEnd = 12;
+      const selectedText = "Test";
+      const tabSpaces = 2;
+
+      const result = countSelectionOffset(
+        startOfFirstLine,
+        selectionStart,
+        selectionEnd,
+        selectedText,
+        tabSpaces,
+      );
+
+      expect(result.selectionStart).toBe(9); // startOfFirstLine (5) + tabSpaces (2) + relativeStart (7 - 5)
+      expect(result.selectionEnd).toBe(14); // startOfFirstLine (5) + tabSpaces (2) + relativeEnd (12 - 5)
+    });
+
+    it("should correctly handle trailing newline in selectedText", () => {
+      const startOfFirstLine = 0;
+      const selectionStart = 0;
+      const selectionEnd = 9;
+      const selectedText = "Line one\n"; // 1 line, ends with newline
+      const tabSpaces = 2;
+
+      const result = countSelectionOffset(
+        startOfFirstLine,
+        selectionStart,
+        selectionEnd,
+        selectedText,
+        tabSpaces,
+      );
+
+      expect(result.selectionStart).toBe(2); // startOfFirstLine (0) + tabSpaces (2) + relativeStart (0)
+      expect(result.selectionEnd).toBe(13); // startOfFirstLine (0) + tabSpaces (2) + relativeEnd (9) + lineCountOffset (0 * 2)
+    });
+
+    it("should handle empty selection", () => {
+      const startOfFirstLine = 0;
+      const selectionStart = 5;
+      const selectionEnd = 5;
+      const selectedText = "";
+      const tabSpaces = 2;
+
+      const result = countSelectionOffset(
+        startOfFirstLine,
+        selectionStart,
+        selectionEnd,
+        selectedText,
+        tabSpaces,
+      );
+
+      expect(result.selectionStart).toBe(7); // startOfFirstLine (0) + tabSpaces (2) + relativeStart (5)
+      expect(result.selectionEnd).toBe(7); // startOfFirstLine (0) + tabSpaces (2) + relativeEnd (5)
     });
   });
 });

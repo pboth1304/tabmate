@@ -65,7 +65,6 @@ export function dedentLines(text: string, options?: TabmateOptions): string {
 
 /**
  * Calculates the range of lines that are fully or partially selected based on the given selection start and end indices.
- *
  * @param value - The string content in which the selection is made.
  * @param selectionStart - The starting index of the selection.
  * @param selectionEnd - The ending index of the selection.
@@ -84,8 +83,7 @@ export function getSelectedLineRange(
 }
 
 /**
- * Replaces a portion of the original string specified by the start and end indices with a replacement string.
- *
+ * Replaces a slice of the original string specified by the start and end indices with a replacement string.
  * @param original - The original string to modify.
  * @param start - The zero-based starting index of the range to be replaced.
  * @param end - The zero-based ending index (exclusive) of the range to be replaced.
@@ -99,4 +97,39 @@ export function replaceTextInRange(
   replacement: string,
 ) {
   return original.slice(0, start) + replacement + original.slice(end);
+}
+
+/**
+ * Calculates the new selection range after indentation.
+ * @param startOfFirstLine - The starting index of the first line in the selection.
+ * @param selectionStart - The starting index of the selection.
+ * @param selectionEnd - The ending index of the selection.
+ * @param selectedText - The text that was selected.
+ * @param tabSpaces - The number of spaces per tab.
+ * @return An object containing the new `selectionStart` and `selectionEnd` indices after indentation.
+ */
+export function countSelectionOffset(
+  startOfFirstLine: number,
+  selectionStart: number,
+  selectionEnd: number,
+  selectedText: string,
+  tabSpaces: number,
+) {
+  // Calculate selection relative to the indented block
+  const selectionStartRelative = selectionStart - startOfFirstLine;
+  const selectionEndRelative = selectionEnd - startOfFirstLine;
+
+  // Count how many lines are in the selection
+  const selectedLines = selectedText.split("\n").length;
+
+  // New selection range accounting for added spaces
+  const newSelectionStart =
+    startOfFirstLine + tabSpaces + selectionStartRelative;
+  const newSelectionEnd =
+    startOfFirstLine +
+    tabSpaces +
+    selectionEndRelative +
+    (selectedLines - 1) * tabSpaces;
+
+  return { selectionStart: newSelectionStart, selectionEnd: newSelectionEnd };
 }

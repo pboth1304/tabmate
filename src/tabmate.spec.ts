@@ -41,6 +41,47 @@ describe("tabmate", () => {
     expect(textareaEl.value).toEqual(`  ${given}`);
   });
 
+  it("should keep selection when indenting", async () => {
+    const given = "test";
+
+    const { container, user } = renderTextarea();
+
+    const textareaEl: HTMLTextAreaElement = getByTestId(container, "textarea");
+
+    tabmate(textareaEl);
+    await typeAndIndent(textareaEl, given, user);
+    expect(textareaEl.value).toEqual(`  ${given}`);
+    textareaEl.setSelectionRange(4, 6); // selects 'st' in 'test'
+
+    await user.tab();
+
+    // Cursor should still select 'st'
+    expect(textareaEl.selectionStart).toBe(6);
+    expect(textareaEl.selectionEnd).toBe(8);
+  });
+
+  it("should keep selection when indenting multiple lines", async () => {
+    const given = "user:\n  name: John Doe\n  email: john.doe@example.com";
+
+    const { container, user } = renderTextarea();
+
+    const textareaEl: HTMLTextAreaElement = getByTestId(container, "textarea");
+
+    tabmate(textareaEl);
+    await user.type(textareaEl, given);
+    textareaEl.setSelectionRange(14, 36); // selects 'John Doeemail: john' in the given textr
+
+    // Tab again, to cause bug that selectionEnd stays at current position when multi line select
+    await user.tab();
+
+    // Cursor should still select 'John Doeemail: john'
+    expect(textareaEl.selectionStart).toBe(16);
+    expect(textareaEl.selectionEnd).toBe(40);
+    expect(textareaEl.value).toEqual(
+      "user:\n    name: John Doe\n    email: john.doe@example.com",
+    );
+  });
+
   it("should be able to detend text in textarea", async () => {
     const given = "test";
 

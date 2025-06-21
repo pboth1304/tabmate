@@ -4,6 +4,7 @@ import type {
   TabmateTarget,
 } from "./types.ts";
 import {
+  countSelectionOffset,
   dedentLines,
   getSelectedLineRange,
   indent,
@@ -96,9 +97,21 @@ export class Tabmate {
           indentedText,
         );
 
-        // TODO: selection increases to the full line
-        el.selectionStart = startOfFirstLine;
-        el.selectionEnd = startOfFirstLine + indentedText.length;
+        // Calculate new selection range after indentation
+        const selectedText = textareaVal.slice(selectionStart, selectionEnd);
+        const {
+          selectionStart: newSelectionStart,
+          selectionEnd: newSelectionEnd,
+        } = countSelectionOffset(
+          startOfFirstLine,
+          selectionStart,
+          selectionEnd,
+          selectedText,
+          tabSpaces,
+        );
+
+        el.selectionStart = newSelectionStart;
+        el.selectionEnd = newSelectionEnd;
       }
     };
 
