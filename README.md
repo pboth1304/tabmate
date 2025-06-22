@@ -22,7 +22,9 @@
   <a href="#contributing">Contributing</a> •
 </p>
 
-<img src="docs/public/showcase.gif" alt="Showcasing TabMate">
+<p align="center">
+    <img src="docs/public/showcase.gif" alt="Showcasing TabMate">
+</p>
 
 ## Key Features
 
