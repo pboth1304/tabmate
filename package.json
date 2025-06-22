@@ -4,6 +4,10 @@
     "name": "Pascal Bothner",
     "email": "pascalcodes@pm.me"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+github.com/pboth1304/tabmate.git"
+  },
   "description": "TabMate is a lightweight (~<1KB gzipped), framework-agnostic JavaScript library for enabling tab/indentation behavior to HTML elements like `textarea` — just like in modern code editors.",
   "keywords": [
     "textarea",
