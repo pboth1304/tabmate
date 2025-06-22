@@ -4,6 +4,25 @@
     "name": "Pascal Bothner",
     "email": "pascalcodes@pm.me"
   },
+  "description": "TabMate is a lightweight (~<1KB gzipped), framework-agnostic JavaScript library for enabling tab/indentation behavior to HTML elements like `textarea` — just like in modern code editors.",
+  "keywords": [
+    "textarea",
+    "indentation",
+    "tab",
+    "editor",
+    "code-editor",
+    "shift-tab",
+    "tab-key",
+    "text-editor",
+    "form",
+    "web-editor",
+    "indent",
+    "dedent",
+    "typescript",
+    "multiline",
+    "text-input",
+    "input-enhancement"
+  ],
   "private": true,
   "version": "0.1.0",
   "type": "module",
@@ -29,7 +48,10 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "devDependencies": {
     "@eslint/js": "^9.28.0",
@@ -45,6 +67,7 @@
     "typescript-eslint": "^8.33.1",
     "vite": "^6.3.5",
     "vite-plugin-dts": "^4.5.4",
+    "vitepress": "^1.6.3",
     "vitest": "^3.2.2"
   }
 }

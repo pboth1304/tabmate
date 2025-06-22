@@ -2,7 +2,7 @@
 
 <h1 align="center">
   <br>
-  <img src="logo.svg" alt="TabMate Logo" width="200"/>
+  <img src="docs/public/logo.svg" alt="TabMate Logo" width="200"/>
   <br>
   TabMate
   <br>
@@ -30,13 +30,13 @@
 
 - ⌨️ **Smart Tab Key Handling** — Press Tab to insert spaces or tabs where your cursor is, just like in your favorite code editor.
 - 🔙 **Shift+Tab Unindent** — Outdent using `Shift+Tab`, even across multiple lines.
-- 🔄 **Multiline Indentation** — Select multiple lines and indent/unindent them all at once.
+- 🖱️ **Multiline Indentation** — Select multiple lines and indent/unindent them all at once.
 - ⚙️ **Custom Tab Size** — Choose how wide your indent should be: 2 spaces, 4 or even 100 spaces?.
 - 🪶 **Zero Dependencies** — Built with modern TypeScript, no external libraries or runtime bloat.
 
 ### When to Choose TabMate?
 
-TabMate is the perfect choice when:
+TabMate is the perfect choice for you when:
 
 - You need proper indentation behavior but don't need a full code editor
 - You're building applications where bundle size matters
@@ -60,16 +60,27 @@ TabMate is exported as ESM and UMD.
 
 ## Usage
 
-To start using `tabmate` the only thing you need to do is to attach provide an HTML element to the `tabmate` function like this:
+The simplest way to use TabMate is to attach it to a textarea element:
 
-```ts
+```js
 import { tabmate } from "@tabmate/core";
 
+// Get a reference to your textarea
 const textarea = document.querySelector("textarea");
-tabmate(textarea, { tabSize: 2 });
+
+// Attach TabMate to the textarea
+const instance = tabmate(textarea);
+
+// Now the textarea has enhanced tab behavior!
 ```
 
-The second param accepts several configuration options. You can check out all the config options and also some more advanced use cases in the <a href="https://pboth1304.github.io/tabmate/">docs</a>
+With this basic setup, your textarea will now support:
+
+- Pressing `Tab` to insert spaces
+- Pressing `Shift+Tab` to remove indentation
+- Multi-line indentation when text is selected
+
+If you want to find out about the configuration options you can pass to the `tabmate` instance you can check the [docs](https://pboth1304.github.io/tabmate/).
 
 ## Roadmap
 
