@@ -26,7 +26,7 @@ export function tabmate(
 
 export class Tabmate {
   static attach(el: TabmateTarget, options?: TabmateOptions): TabmateInstance {
-    const config: Required<TabmateOptions> = { ...globalDefaults, ...options };
+    let config: Required<TabmateOptions> = { ...globalDefaults, ...options };
 
     const handleKeydown = (event: KeyboardEvent) => {
       const { selectionStart, selectionEnd, value: textareaVal } = el;
@@ -97,7 +97,7 @@ export class Tabmate {
           indentedText,
         );
 
-        // Calculate new selection range after indentation
+        // Calculate a new selection range after indentation
         const selectedText = textareaVal.slice(selectionStart, selectionEnd);
         const {
           selectionStart: newSelectionStart,
@@ -126,6 +126,9 @@ export class Tabmate {
       },
       getOptions() {
         return { ...config };
+      },
+      updateOptions(options: Partial<TabmateOptions>) {
+        config = { ...config, ...options };
       },
     };
   }

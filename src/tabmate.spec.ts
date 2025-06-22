@@ -248,4 +248,23 @@ describe("tabmate", () => {
 
     expect(config).toEqual(expectedConfig);
   });
+
+  it("should update config", async () => {
+    const customConfig: TabmateOptions = { tabWidth: 100 };
+    const expectedConfig: TabmateOptions = {
+      ...customConfig,
+      tabs: 1, // default value
+    };
+
+    const { container } = renderTextarea();
+
+    const textareaEl: HTMLTextAreaElement = getByTestId(container, "textarea");
+    const instance = tabmate(textareaEl);
+
+    instance.updateOptions(customConfig);
+
+    const newConfig = instance.getOptions();
+
+    expect(newConfig).toEqual(expectedConfig);
+  });
 });
