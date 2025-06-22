@@ -5,15 +5,13 @@ export default defineConfig({
   title: "TabMate",
   description:
     "TabMate is a lightweight (~<1KB gzipped), framework-agnostic JavaScript library for enabling tab/indentation behavior to HTML elements like `textarea` — just like in modern code editors.",
+  base: "/tabmate/",
   themeConfig: {
     nav: [
       { text: "Home", link: "/" },
       { text: "Docs", link: "/docs/why" },
       { text: "API", link: "/api" },
     ],
-    search: {
-      provider: "local",
-    },
     footer: {
       message: "Released under the MIT License.",
       copyright: "Copyright © 2025-present Pascal Bothner",

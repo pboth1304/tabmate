@@ -1,6 +1,6 @@
 <script setup>
 import { tabmate } from "../../dist/tabmate.es.js";
-import { onMounted } from "../.vitepress/cache/deps/vue.js";
+import { onMounted } from "vue";
 
 onMounted(() => {
   const textarea = document.querySelector("#textarea-basic");
