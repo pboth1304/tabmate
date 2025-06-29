@@ -2,7 +2,7 @@
 layout: home
 
 hero:
-  name: "TabMate"
+  name: "TabMate.js"
   text: "Give your textareas code editor powers"
   tagline: Lightweight, framework-agnostic JavaScript library for enabling tab/indentation behavior to HTML elements.
   image: "logo.svg"
