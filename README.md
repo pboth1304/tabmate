@@ -4,12 +4,12 @@
   <br>
   <img src="docs/public/logo.svg" alt="TabMate Logo" width="200"/>
   <br>
-  TabMate
+  TabMate.js
   <br>
 </h1>
 
 <p align="center">
-    <b>TabMate</b> is a lightweight (~<1KB gzipped), framework-agnostic JavaScript library for enabling tab/indentation behavior to HTML elements like textarea — just like in modern code editors.
+    <b>TabMate.js</b> is a lightweight (~<1KB gzipped), framework-agnostic JavaScript library for enabling tab/indentation behavior to HTML elements like textarea — just like in modern code editors.
     <br />
     <a href="https://pboth1304.github.io/tabmate/"><strong>Explore the docs »</strong></a>
 </p>
