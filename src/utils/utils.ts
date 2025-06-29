@@ -45,7 +45,13 @@ export function dedent(text: string, options?: TabmateOptions): string {
  */
 export function indentLines(text: string, options?: TabmateOptions): string {
   const lines = text.split("\n");
-  const indentedLines = lines.map((line) => indent(line, options));
+  const indentedLines = lines.map((line) => {
+    // Skip blank lines (empty or only whitespace)
+    if (line.trim() === "") {
+      return line;
+    }
+    return indent(line, options);
+  });
   return indentedLines.join("\n");
 }
 

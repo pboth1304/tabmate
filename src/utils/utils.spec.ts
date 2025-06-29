@@ -85,6 +85,16 @@ describe("utils", () => {
       );
     });
 
+    it("should skip blank lines when indenting", () => {
+      const given = "user:\n  name: John Doe\n\n  email: john.doe@example.com";
+
+      const result = indentLines(given);
+
+      expect(result).toEqual(
+        "  user:\n    name: John Doe\n\n    email: john.doe@example.com",
+      );
+    });
+
     it("should dedent multiple lines of text", () => {
       const given =
         "  user:\n    name: John Doe\n    email: john.doe@example.com";
