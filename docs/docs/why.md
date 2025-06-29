@@ -16,7 +16,7 @@ While there are comprehensive code editors available, they often come with signi
 - **Framework-agnostic**: Works with any JavaScript application, regardless of your frontend framework
 - **Focused Functionality**: Provides only what you need for tab/indentation behavior - nothing more
 - **TypeScript-first**: Built with TypeScript for great developer experience and type safety
-- **Zero Dependencies**: No third-party libraries are included in the production bundle.
+- **Zero Dependencies**: No third-party libraries are included in the production bundle
 
 ### When to Choose TabMate
 
