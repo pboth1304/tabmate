@@ -1,5 +1,11 @@
 # Tabmate Changelog
 
+## v0.2.0 - "SkipTok" (2025-06-29)
+
+### Features
+
+- Ignore blank lines when indenting multiple lines
+
 ## v0.1.0 - "Tab Zero" (2025-06-22)
 
 ### Features
