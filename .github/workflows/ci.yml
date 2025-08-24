@@ -25,7 +25,12 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       - name: Run tests
-        run: pnpm test
+        run: pnpm test:coverage
+      - name: 'Report Coverage'
+        # Set if: always() to also generate the report if tests are failing
+        # Only works if you set `reportOnFailure: true` in your vite config as specified above
+        if: always()
+        uses: davelosert/vitest-coverage-report-action@v2
       - name: Run linter
         run: pnpm lint
       - name: Build project
