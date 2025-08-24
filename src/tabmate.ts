@@ -12,7 +12,7 @@ import {
   replaceTextInRange,
 } from "./utils/utils.ts";
 
-let globalDefaults: Required<TabmateOptions> = {
+const globalDefaults: Required<TabmateOptions> = {
   tabs: 1,
   tabWidth: 2,
 };
