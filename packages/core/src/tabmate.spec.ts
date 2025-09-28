@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { getByTestId } from "@testing-library/dom";
 import userEvent, { type UserEvent } from "@testing-library/user-event";
-import { tabmate } from "./tabmate.ts";
+import { tabmate } from "./tabmate";
 import type { TabmateOptions } from "./types.ts";
 
 const renderTextarea = () => {

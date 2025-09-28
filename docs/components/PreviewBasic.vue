@@ -1,5 +1,5 @@
 <script setup>
-import { tabmate } from "../../dist/tabmate.es.js";
+import { tabmate } from "../../packages/core/dist/index.esm.js";
 import { onMounted } from "vue";
 
 onMounted(() => {

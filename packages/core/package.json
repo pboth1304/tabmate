@@ -1,0 +1,64 @@
+{
+  "name": "@tabmate/core",
+  "author": {
+    "name": "Pascal Bothner",
+    "email": "pascalcodes@pm.me"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+github.com/pboth1304/tabmate.git"
+  },
+  "description": "TabMate is a lightweight (~<1KB gzipped), framework-agnostic JavaScript library for enabling tab/indentation behavior to HTML elements like `textarea` — just like in modern code editors.",
+  "keywords": [
+    "textarea",
+    "indentation",
+    "tab",
+    "editor",
+    "code-editor",
+    "shift-tab",
+    "tab-key",
+    "text-editor",
+    "form",
+    "web-editor",
+    "indent",
+    "dedent",
+    "typescript",
+    "multiline",
+    "text-input",
+    "input-enhancement"
+  ],
+  "private": false,
+  "version": "0.2.0",
+  "type": "module",
+  "main": "./dist/index.cjs.js",
+  "module": "./dist/index.esm.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.cjs.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "*": ["./dist/*", "./dist/index.d.ts"]
+    }
+  },
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:ui": "vitest --ui",
+    "lint": "eslint ."
+  }
+}

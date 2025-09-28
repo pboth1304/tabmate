@@ -7,7 +7,7 @@ import { defineConfig, globalIgnores } from "eslint/config";
 
 export default defineConfig([
   globalIgnores([
-    "dist/*",
+    "**/dist/**",
     "coverage/*",
     "docs/.vitepress/dist/*",
     "docs/.vitepress/cache/*",

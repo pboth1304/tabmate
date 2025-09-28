@@ -7,7 +7,7 @@ import {
   indent,
   indentLines,
   replaceTextInRange,
-} from "./utils.ts";
+} from "./utils";
 
 describe("utils", () => {
   describe("indent", () => {

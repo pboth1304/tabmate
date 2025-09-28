@@ -17,7 +17,13 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
     "declaration": true,
-    "declarationMap": true
+    "declarationMap": true,
+    "composite": true,
+    "baseUrl": "."
   },
-  "include": ["src"]
+  "include": [],
+  "references": [
+    { "path": "./packages/core" },
+    { "path": "./packages/vue" }
+  ]
 }

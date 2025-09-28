@@ -1,8 +1,4 @@
-import type {
-  TabmateInstance,
-  TabmateOptions,
-  TabmateTarget,
-} from "./types.ts";
+import type { TabmateInstance, TabmateOptions, TabmateTarget } from "./types";
 import {
   countSelectionOffset,
   dedentLines,
@@ -10,7 +6,7 @@ import {
   indent,
   indentLines,
   replaceTextInRange,
-} from "./utils/utils.ts";
+} from "./utils/utils";
 
 const globalDefaults: Required<TabmateOptions> = {
   tabs: 1,

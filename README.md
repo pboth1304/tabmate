@@ -40,7 +40,7 @@ TabMate is the perfect choice for you when:
 
 - You need proper indentation behavior but don't need a full code editor
 - You're building applications where bundle size matters
-- You want to enhance textareas in forms, comment sections, or simple editors
+- You want to enhance text-areas in forms, comment sections, or simple editors
 
 **TabMate focuses on doing one thing very well - providing intuitive, code-editor-like indentation behavior for plain HTML elements - without the overhead of more complex solutions.**
 
@@ -82,12 +82,19 @@ With this basic setup, your textarea will now support:
 
 If you want to find out about the configuration options you can pass to the `tabmate` instance you can check the [docs](https://pboth1304.github.io/tabmate/).
 
+### Framework Integration
+
+TabMate is framework-agnostic, but it comes with direct integration for Vue (React and Angular coming soon).
+
+Check out the framework integration section in the [docs](https://pboth1304.github.io/tabmate/) for more information. 
+
 ## Roadmap
 
-- [ ] Smarter indenting (e.g. skipping blank lines)
+- [x] Smarter indenting (e.g. skipping blank lines)
 - [ ] Auto-indentation
-- [ ] Direct framework integration for React, Angular & Vue (e.g. by offering a Vue directive you can attach to an HTML element)
-- [ ] Allow to add plugins for extra behaviour
+- [x] Direct framework integration for Vue
+- [ ] Direct framework integration for React & Angular
+- [ ] Allow to add plugins for extra behavior
 
 ## Contributing
 

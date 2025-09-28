@@ -1,5 +1,5 @@
 {
-  "name": "@tabmate/core",
+  "name": "tabmate-monorepo",
   "author": {
     "name": "Pascal Bothner",
     "email": "pascalcodes@pm.me"
@@ -8,51 +8,16 @@
     "type": "git",
     "url": "git+github.com/pboth1304/tabmate.git"
   },
-  "description": "TabMate is a lightweight (~<1KB gzipped), framework-agnostic JavaScript library for enabling tab/indentation behavior to HTML elements like `textarea` — just like in modern code editors.",
-  "keywords": [
-    "textarea",
-    "indentation",
-    "tab",
-    "editor",
-    "code-editor",
-    "shift-tab",
-    "tab-key",
-    "text-editor",
-    "form",
-    "web-editor",
-    "indent",
-    "dedent",
-    "typescript",
-    "multiline",
-    "text-input",
-    "input-enhancement"
-  ],
-  "private": false,
+  "description": "PNPM Workspace for Tabmate",
+  "private": true,
   "version": "0.2.0",
-  "type": "module",
-  "main": "./dist/tabmate.umd.js",
-  "module": "./dist/tabmate.es.js",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "import": "./dist/index.es.js",
-      "require": "./dist/index.umd.js"
-    }
-  },
-  "sideEffects": false,
-  "files": [
-    "dist",
-    "README.md",
-    "LICENSE"
+  "workspaces": [
+    "packages/*"
   ],
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview",
-    "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage",
-    "test:ui": "vitest --ui",
-    "lint": "eslint .",
+    "build": "pnpm -r build",
+    "test": "pnpm -r test",
+    "lint": "pnpm -r lint",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs"
@@ -63,6 +28,7 @@
     "@eslint/markdown": "^6.5.0",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/user-event": "^14.6.1",
+    "@testing-library/vue": "^8.1.0",
     "@vitest/coverage-v8": "3.2.4",
     "eslint": "^9.28.0",
     "globals": "^16.2.0",

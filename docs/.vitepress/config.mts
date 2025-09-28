@@ -25,6 +25,11 @@ export default defineConfig({
           { text: "Examples", link: "/docs/examples" },
         ],
       },
+      {
+        text: "Framework integration",
+        link: "/docs/framework-integration/index.md",
+        items: [{ text: "Vue", link: "/docs/framework-integration/vue" }],
+      },
     ],
     logo: "/logo.svg",
     socialLinks: [
