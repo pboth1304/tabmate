@@ -1,6 +1,6 @@
 {
   "name": "@tabmate/vue",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
@@ -15,6 +15,7 @@
     "name": "Pascal Bothner",
     "email": "pascalcodes@pm.me"
   },
+  "private": false,
   "description": "TabMate is a lightweight (~<1KB gzipped), framework-agnostic JavaScript library for enabling tab/indentation behavior to HTML elements like `textarea` — just like in modern code editors. This package adds support for easier integration with Vue.",
   "keywords": [
     "textarea",
@@ -50,7 +51,7 @@
     }
   },
   "dependencies": {
-    "@tabmate/core": "workspace:*"
+    "@tabmate/core": ">=0.2.0"
   },
   "peerDependencies": {
     "vue": ">=3.0.0"

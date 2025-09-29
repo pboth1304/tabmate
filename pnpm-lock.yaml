@@ -68,7 +68,7 @@ importers:
   packages/vue:
     dependencies:
       '@tabmate/core':
-        specifier: workspace:*
+        specifier: '>=0.2.0'
         version: link:../core
     devDependencies:
       vue:
