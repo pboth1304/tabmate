@@ -86,7 +86,7 @@ If you want to find out about the configuration options you can pass to the `tab
 
 TabMate is framework-agnostic, but it comes with direct integration for Vue (React and Angular coming soon).
 
-Check out the framework integration section in the [docs](https://pboth1304.github.io/tabmate/) for more information. 
+Check out the framework integration section in the [docs](https://pboth1304.github.io/tabmate/docs/framework-integration/) for more information. 
 
 ## Roadmap
 
