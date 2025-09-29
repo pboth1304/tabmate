@@ -1,5 +1,11 @@
 # Tabmate Changelog
 
+## v0.2.1 - "IFixIt" (2025-09-29)
+
+### Bug Fixes
+
+- Resolve outdated export declaration in `package.json`
+
 ## v0.2.0 - "SkipTok" (2025-06-29)
 
 ### Features
